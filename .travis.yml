@@ -1,0 +1,15 @@
+language: go
+sudo: false
+go:
+  - "1.14"
+before_script:
+  - make build
+  - make test
+deploy:
+- provider: script
+  api_key: $GITHUB_TOKEN
+  skip_cleanup: true
+  script: curl -sL https://git.io/goreleaser | bash
+  on:
+    tags: true
+  verbose: true

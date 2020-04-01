@@ -1,9 +1,0 @@
-{
-  "feeds": [
-    "https://news.ycombinator.com/rss",
-    "https://www.reddit.com/r/golang/.rss",
-    "https://www.reddit.com/r/linux/.rss",
-    "https://www.zdnet.com/topic/security/rss.xml",
-    "https://aws.amazon.com/blogs/security/feed/"
-  ]
-}
