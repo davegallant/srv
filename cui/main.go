@@ -1,17 +1,18 @@
-package cmd
+package cui
 
 import (
 	"fmt"
 	"log"
 	"os/exec"
 	"os/user"
+	"path"
 
-	"github.com/davegallant/srv/internal"
+	"github.com/davegallant/srv/controller"
 	"github.com/jroimartin/gocui"
 )
 
 // Controller can access Feeds and Config
-var Controller *internal.Controller
+var Controller *controller.Controller
 
 var (
 	viewArr     = []string{"feeds", "Items"}
@@ -94,34 +95,8 @@ func hideLoading(g *gocui.Gui) error {
 
 func refreshFeeds(g *gocui.Gui, v *gocui.View) error {
 	showLoading(g)
-	Controller.Rss.Update()
+	Controller.Rss.Update(Controller.Config.Feeds)
 	//hideLoading(g)
-	return nil
-}
-
-// statically map all of the keys
-func keybindings(g *gocui.Gui) error {
-	if err := g.SetKeybinding("", gocui.KeyTab, gocui.ModNone, nextView); err != nil {
-		return err
-	}
-	if err := g.SetKeybinding("", gocui.KeyArrowDown, gocui.ModNone, cursorDown); err != nil {
-		return err
-	}
-	if err := g.SetKeybinding("", gocui.KeyArrowUp, gocui.ModNone, cursorUp); err != nil {
-		return err
-	}
-	if err := g.SetKeybinding("", gocui.KeyCtrlC, gocui.ModNone, quit); err != nil {
-		return err
-	}
-	if err := g.SetKeybinding("feeds", gocui.KeyEnter, gocui.ModNone, openFeed); err != nil {
-		return err
-	}
-	if err := g.SetKeybinding("Items", gocui.KeyEnter, gocui.ModNone, openItem); err != nil {
-		return err
-	}
-	if err := g.SetKeybinding("", gocui.KeyF5, gocui.ModNone, refreshFeeds); err != nil {
-		return err
-	}
 	return nil
 }
 
@@ -195,9 +170,9 @@ func Start() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	configPath := usr.HomeDir + "/.config/srv/config.yaml"
+	configPath := path.Join(usr.HomeDir, ".config", "srv", "config.yaml")
 
-	Controller = &internal.Controller{}
+	Controller = &controller.Controller{}
 	Controller.Init(configPath)
 
 	g, err := gocui.NewGui(gocui.OutputNormal)

@@ -1,4 +1,4 @@
-package internal
+package config
 
 import (
 	"errors"
@@ -7,6 +7,7 @@ import (
 	"os"
 	"runtime"
 
+	"github.com/davegallant/srv/file"
 	"gopkg.in/yaml.v2"
 )
 
@@ -25,7 +26,7 @@ var DefaultConfiguration = Configuration{
 	},
 }
 
-// Determines the default viewer
+// DetermineExternalViewer checks the OS to decide the default viewer
 func DetermineExternalViewer() (string, error) {
 	switch os := runtime.GOOS; os {
 	case "linux":
@@ -38,17 +39,14 @@ func DetermineExternalViewer() (string, error) {
 }
 
 // LoadConfiguration takes a filename (configuration) and loads it.
-func LoadConfiguration(file string) Configuration {
+func LoadConfiguration(f string) Configuration {
 	var config Configuration
 
-	// If the configuration file does not exist,
-	// write a default config
-	_, err := os.Stat(file)
-	if os.IsNotExist(err) {
-		WriteConfig(DefaultConfiguration, file)
+	if !file.Exists(f) {
+		WriteConfig(DefaultConfiguration, f)
 	}
 
-	data, err := ioutil.ReadFile(file)
+	data, err := ioutil.ReadFile(f)
 
 	if err != nil {
 		log.Println(err)
@@ -77,7 +75,7 @@ func WriteConfig(config Configuration, file string) error {
 		log.Fatalf("Unable to marshal default config: %v", err)
 	}
 
-	err = ioutil.WriteFile(file, c, 0644)
+	err = ioutil.WriteFile(file, c, 0600)
 	if err != nil {
 		log.Fatalf("Unable to write default config: %v", err)
 	}
