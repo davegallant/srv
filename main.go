@@ -1,9 +1,9 @@
 package main
 
-import "github.com/davegallant/srv/cmd"
+import cui "github.com/davegallant/srv/cui"
 
 func main() {
 
-	cmd.Start()
+	cui.Start()
 
 }

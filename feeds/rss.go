@@ -1,4 +1,4 @@
-package internal
+package feeds
 
 import (
 	"fmt"
@@ -12,20 +12,15 @@ import (
 
 type RSS struct {
 	Feeds []*gofeed.Feed
-	c     *Controller
-}
-
-func (r *RSS) New(c *Controller) {
-	r.c = c
 }
 
 // Update fetches all articles for all feeds
-func (r *RSS) Update() {
+func (r *RSS) Update(feeds []string) {
 	fp := gofeed.NewParser()
 	var wg sync.WaitGroup
 	var mux sync.Mutex
 	r.Feeds = []*gofeed.Feed{}
-	for _, f := range r.c.Config.Feeds {
+	for _, f := range feeds {
 		f := f
 		wg.Add(1)
 		go func() {
