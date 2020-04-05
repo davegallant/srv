@@ -2,7 +2,7 @@
 
 View RSS feeds from the terminal.
 
-![image](https://user-images.githubusercontent.com/4519234/77839285-49077c00-7149-11ea-80ad-76efda38615e.png)
+![image](https://user-images.githubusercontent.com/4519234/78465683-bc1f6e00-76c6-11ea-96e7-1cdd4a5c294f.png)
 
 ## configure
 

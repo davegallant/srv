@@ -63,8 +63,9 @@ func openFeed(g *gocui.Gui, v *gocui.View) error {
 func openItem(g *gocui.Gui, v *gocui.View) error {
 	_, cy := v.Cursor()
 	item := Controller.Rss.Feeds[currentFeed].Items[cy]
-	viewer := Controller.Config.ExternalViewer
-	err := exec.Command(viewer, item.Link).Start()
+	err := exec.Command(
+		Controller.Config.ExternalViewer,
+		append(Controller.Config.ExternalViewerArgs, item.Link)...).Start()
 
 	if err != nil {
 		log.Fatal(err)
@@ -138,8 +139,8 @@ func layout(g *gocui.Gui) error {
 		}
 		v.Title = "Feeds"
 		v.Highlight = true
-		v.SelBgColor = gocui.ColorGreen
-		v.SelFgColor = gocui.ColorBlack
+		v.SelBgColor = selectionBgColor
+		v.SelFgColor = selectionFgColor
 
 		if _, err = setCurrentViewOnTop(g, "feeds"); err != nil {
 			return err
@@ -154,8 +155,8 @@ func layout(g *gocui.Gui) error {
 		}
 		v.Title = "Items"
 		v.Highlight = true
-		v.SelBgColor = gocui.ColorGreen
-		v.SelFgColor = gocui.ColorBlack
+		v.SelBgColor = selectionBgColor
+		v.SelFgColor = selectionFgColor
 	}
 	return nil
 }
