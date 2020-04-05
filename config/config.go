@@ -13,8 +13,9 @@ import (
 
 // Configuration stores the global config
 type Configuration struct {
-	Feeds          []string `yaml:"feeds"`
-	ExternalViewer string   `yaml:"externalViewer,omitempty"`
+	Feeds              []string `yaml:"feeds"`
+	ExternalViewer     string   `yaml:"externalViewer,omitempty"`
+	ExternalViewerArgs []string `yaml:"externalViewerArgs,omitempty"`
 }
 
 // DefaultConfiguration can be used if a config is missing
@@ -22,6 +23,7 @@ var DefaultConfiguration = Configuration{
 	Feeds: []string{
 		"https://news.ycombinator.com/rss",
 		"https://www.reddit.com/r/golang/.rss",
+		"https://www.reddit.com/r/linux/.rss",
 		"https://www.zdnet.com/topic/security/rss.xml",
 	},
 }

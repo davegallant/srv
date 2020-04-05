@@ -15,8 +15,6 @@ func TestLoadConfiguration(t *testing.T) {
 		"https://www.reddit.com/r/golang/.rss",
 		"https://www.reddit.com/r/linux/.rss",
 		"https://www.zdnet.com/topic/security/rss.xml",
-		"https://aws.amazon.com/blogs/security/feed/",
-		"https://www.archlinux.org/feeds/news/",
 	}
 
 	assert.Equal(
