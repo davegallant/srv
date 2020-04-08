@@ -27,6 +27,11 @@ func openFeed(g *gocui.Gui, v *gocui.View) error {
 	ov, _ := g.View("Items")
 
 	ov.Clear()
+
+	if err := v.SetOrigin(0, 0); err != nil {
+		log.Fatal(err)
+	}
+
 	for _, item := range feed.Items {
 		fmt.Fprintln(ov, "-", item.Title)
 	}
