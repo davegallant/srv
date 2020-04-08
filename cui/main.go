@@ -11,43 +11,19 @@ import (
 	"github.com/jroimartin/gocui"
 )
 
-// Controller can access Feeds and Config
+// Controller can access internal state
 var Controller *controller.Controller
 
 var (
-	viewArr     = []string{"feeds", "Items"}
-	active      = 0
-	currentFeed = 0 // TODO: move to Controller
+	viewArr = []string{"feeds", "Items"}
+	active  = 0
 )
-
-func cursorDown(g *gocui.Gui, v *gocui.View) error {
-	if v != nil {
-		cx, cy := v.Cursor()
-		if err := v.SetCursor(cx, cy+1); err != nil {
-			v.SetCursor(cx, cy-1)
-		}
-	}
-	return nil
-}
-
-func cursorUp(g *gocui.Gui, v *gocui.View) error {
-	if v != nil {
-		ox, oy := v.Origin()
-		cx, cy := v.Cursor()
-		if err := v.SetCursor(cx, cy-1); err != nil && oy > 0 {
-			if err := v.SetOrigin(ox, oy-1); err != nil {
-				return err
-			}
-		}
-	}
-	return nil
-}
 
 // openFeed opens all items in the feed
 func openFeed(g *gocui.Gui, v *gocui.View) error {
-	_, cy := v.Cursor()
-	currentFeed = cy
-	feed := Controller.Rss.Feeds[currentFeed]
+	_, oy := v.Origin()
+	feed := Controller.Rss.Feeds[oy]
+	Controller.CurrentFeed = oy
 	ov, _ := g.View("Items")
 
 	ov.Clear()
@@ -61,8 +37,8 @@ func openFeed(g *gocui.Gui, v *gocui.View) error {
 
 // openItem opens the feed in an external browser
 func openItem(g *gocui.Gui, v *gocui.View) error {
-	_, cy := v.Cursor()
-	item := Controller.Rss.Feeds[currentFeed].Items[cy]
+	_, oy := v.Origin()
+	item := Controller.Rss.Feeds[Controller.CurrentFeed].Items[oy]
 	err := exec.Command(
 		Controller.Config.ExternalViewer,
 		append(Controller.Config.ExternalViewerArgs, item.Link)...).Start()
@@ -74,30 +50,8 @@ func openItem(g *gocui.Gui, v *gocui.View) error {
 	return nil
 }
 
-func showLoading(g *gocui.Gui) error {
-	maxX, maxY := g.Size()
-	if v, err := g.SetView("loading", maxX/2-4, maxY/2-1, maxX/2+4, maxY/2+1); err != nil {
-		if err != gocui.ErrUnknownView {
-			return err
-		}
-		fmt.Fprintln(v, "Loading")
-	}
-	return nil
-}
-
-func hideLoading(g *gocui.Gui) error {
-	if err := g.DeleteView("loading"); err != nil {
-		if err != gocui.ErrUnknownView {
-			return err
-		}
-	}
-	return nil
-}
-
 func refreshFeeds(g *gocui.Gui, v *gocui.View) error {
-	showLoading(g)
 	Controller.Rss.Update(Controller.Config.Feeds)
-	//hideLoading(g)
 	return nil
 }
 
@@ -137,10 +91,10 @@ func layout(g *gocui.Gui) error {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
-		v.Title = "Feeds"
 		v.Highlight = true
 		v.SelBgColor = selectionBgColor
 		v.SelFgColor = selectionFgColor
+		v.Title = "Feeds"
 
 		if _, err = setCurrentViewOnTop(g, "feeds"); err != nil {
 			return err
@@ -153,10 +107,10 @@ func layout(g *gocui.Gui) error {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
-		v.Title = "Items"
 		v.Highlight = true
 		v.SelBgColor = selectionBgColor
 		v.SelFgColor = selectionFgColor
+		v.Title = "Items"
 	}
 	return nil
 }
