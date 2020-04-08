@@ -8,7 +8,6 @@ import (
 
 func scroll(g *gocui.Gui, v *gocui.View, direction int) error {
 	if v != nil {
-
 		_, y := v.Size()
 		ox, oy := v.Origin()
 		cx, cy := v.Cursor()
@@ -25,9 +24,7 @@ func scroll(g *gocui.Gui, v *gocui.View, direction int) error {
 			v.Autoscroll = false
 			v.SetOrigin(ox, oy+direction)
 			return nil
-
 		}
-
 	}
 	return nil
 }
