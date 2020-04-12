@@ -7,6 +7,23 @@ View RSS feeds from the terminal.
 
 ![image](https://user-images.githubusercontent.com/4519234/78465683-bc1f6e00-76c6-11ea-96e7-1cdd4a5c294f.png)
 
+## install
+
+### via releases
+
+```shell
+VERSION='0.0.2'; \
+sudo curl --progress-bar \
+-L "https://github.com/davegallant/srv/releases/download/v${VERSION}/srv_${VERSION}_$(uname -s)_x86_64.tar.gz" | \
+sudo tar -C /usr/bin --overwrite -xvzf - srv
+```
+
+### via go
+
+```shell
+go get github.com/davegallant/srv
+```
+
 ## configure
 
 srv reads configuration from `~/.config/srv/config.yaml`
