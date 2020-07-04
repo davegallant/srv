@@ -30,9 +30,17 @@ func scroll(g *gocui.Gui, v *gocui.View, direction int) error {
 }
 
 func cursorDown(g *gocui.Gui, v *gocui.View) error {
-	return scroll(g, v, 1)
+	err := scroll(g, v, 1)
+	if g.CurrentView().Title == "Items" {
+		displayDescription(g, v)
+	}
+	return err
 }
 
 func cursorUp(g *gocui.Gui, v *gocui.View) error {
-	return scroll(g, v, -1)
+	err := scroll(g, v, -1)
+	if g.CurrentView().Title == "Items" {
+		displayDescription(g, v)
+	}
+	return err
 }

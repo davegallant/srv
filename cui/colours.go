@@ -3,6 +3,9 @@ package cui
 import "github.com/jroimartin/gocui"
 
 const (
-	selectionBgColor = gocui.ColorWhite
-	selectionFgColor = gocui.ColorBlack
+	feedItemSelectionBgColor = gocui.ColorCyan
+	feedItemSelectionFgColor = gocui.ColorBlack
+	feedNameSelectionBgColor = gocui.ColorWhite
+	feedNameSelectionFgColor = gocui.ColorBlack
+	descriptionFgColor       = gocui.ColorCyan
 )

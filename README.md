@@ -5,14 +5,15 @@
 
 View RSS feeds from the terminal.
 
-![image](https://user-images.githubusercontent.com/4519234/78465683-bc1f6e00-76c6-11ea-96e7-1cdd4a5c294f.png)
+![image](https://user-images.githubusercontent.com/4519234/86504202-b861bd00-bd83-11ea-8a8e-4f28e38a71ce.png)
+
 
 ## install
 
 ### via releases
 
 ```shell
-VERSION='0.0.2'; \
+VERSION='0.1.0'; \
 sudo curl --progress-bar \
 -L "https://github.com/davegallant/srv/releases/download/v${VERSION}/srv_${VERSION}_$(uname -s)_x86_64.tar.gz" | \
 sudo tar -C /usr/bin --overwrite -xvzf - srv
@@ -39,7 +40,7 @@ An example config can be copied:
 cp ./config-example.yaml ~/.config/srv/config.yaml
 ```
 
-## control
+## navigate
 
 Key mappings are statically defined for the time being.
 
