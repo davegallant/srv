@@ -38,6 +38,7 @@ func openFeed(g *gocui.Gui, v *gocui.View) error {
 		fmt.Fprintln(ov, "-", item.Title)
 	}
 	nextView(g, ov)
+	displayDescription(g, ov)
 
 	return nil
 }
