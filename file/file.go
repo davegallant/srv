@@ -2,14 +2,15 @@
 package file
 
 import (
-	"os"
+	"github.com/spf13/afero"
 )
 
 // Exists returns true if a file exists
 func Exists(filename string) bool {
-	info, err := os.Stat(filename)
-	if os.IsNotExist(err) {
+	var AppFs = afero.NewOsFs()
+	_, err := AppFs.Stat(filename)
+	if err != nil {
 		return false
 	}
-	return !info.IsDir()
+	return true
 }

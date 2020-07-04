@@ -8,7 +8,9 @@ import (
 	"path"
 
 	"github.com/davegallant/srv/controller"
+	"github.com/davegallant/srv/utils"
 	"github.com/jroimartin/gocui"
+	"github.com/mmcdole/gofeed"
 )
 
 // Controller can access internal state
@@ -40,10 +42,28 @@ func openFeed(g *gocui.Gui, v *gocui.View) error {
 	return nil
 }
 
+func getCurrentFeedItem(v *gocui.View) *gofeed.Item {
+	_, oy := v.Origin()
+	return Controller.Rss.Feeds[Controller.CurrentFeed].Items[oy]
+}
+
+// displayDescription displays feed descriptin if it exists
+func displayDescription(g *gocui.Gui, v *gocui.View) error {
+
+	ov, _ := g.View("Description")
+	ov.Clear()
+
+	item := getCurrentFeedItem(v)
+	description := utils.StripHtmlTags(item.Description)
+	fmt.Fprintln(ov, description)
+
+	return nil
+}
+
 // openItem opens the feed in an external browser
 func openItem(g *gocui.Gui, v *gocui.View) error {
-	_, oy := v.Origin()
-	item := Controller.Rss.Feeds[Controller.CurrentFeed].Items[oy]
+
+	item := getCurrentFeedItem(v)
 	err := exec.Command(
 		Controller.Config.ExternalViewer,
 		append(Controller.Config.ExternalViewerArgs, item.Link)...).Start()
@@ -92,13 +112,13 @@ func nextView(g *gocui.Gui, v *gocui.View) error {
 
 func layout(g *gocui.Gui) error {
 	maxX, maxY := g.Size()
-	if v, err := g.SetView("feeds", 0, 0, maxX-1, maxY/4-1); err != nil {
+	if v, err := g.SetView("feeds", 0, 0, maxX-1, maxY/3-1); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
 		v.Highlight = true
-		v.SelBgColor = selectionBgColor
-		v.SelFgColor = selectionFgColor
+		v.SelBgColor = feedNameSelectionBgColor
+		v.SelFgColor = feedNameSelectionFgColor
 		v.Title = "Feeds"
 
 		if _, err = setCurrentViewOnTop(g, "feeds"); err != nil {
@@ -108,14 +128,24 @@ func layout(g *gocui.Gui) error {
 			fmt.Fprintln(v, "-", f.Title)
 		}
 	}
-	if v, err := g.SetView("Items", 0, maxY/4, maxX-1, maxY-1); err != nil {
+	if v, err := g.SetView("Items", 0, maxY/3, maxX-1, maxY-(maxY/5)-1); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
 		v.Highlight = true
-		v.SelBgColor = selectionBgColor
-		v.SelFgColor = selectionFgColor
+		v.SelBgColor = feedItemSelectionBgColor
+		v.SelFgColor = feedItemSelectionFgColor
 		v.Title = "Items"
+	}
+	if v, err := g.SetView("Description", 0, maxY-maxY/5, maxX-1, maxY-1); err != nil {
+		if err != gocui.ErrUnknownView {
+			return err
+		}
+		v.SelBgColor = feedItemSelectionBgColor
+		v.SelFgColor = feedItemSelectionFgColor
+		v.Title = "Description"
+		v.FgColor = descriptionFgColor
+		v.Wrap = true
 	}
 	return nil
 }
@@ -135,7 +165,7 @@ func Start() {
 	Controller = &controller.Controller{}
 	Controller.Init(configPath)
 
-	g, err := gocui.NewGui(gocui.OutputNormal)
+	g, err := gocui.NewGui(gocui.Output256)
 	if err != nil {
 		log.Panicln(err)
 	}
