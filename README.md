@@ -27,7 +27,7 @@ go get github.com/davegallant/srv
 
 ## configure
 
-srv reads configuration from `~/.config/srv/config.yaml`
+srv reads configuration from `~/.config/srv/config.yml`
 
 If a configuration is not provided, a default configuration is generated.
 
@@ -37,7 +37,7 @@ If a configuration is not provided, a default configuration is generated.
 An example config can be copied:
 
 ```shell
-cp ./config-example.yaml ~/.config/srv/config.yaml
+cp ./config-example.yml ~/.config/srv/config.yml
 ```
 
 ## navigate
@@ -48,6 +48,8 @@ Key mappings are statically defined for the time being.
 - `UP/DOWN` navigates feeds and items`
 - `ENTER` either selects a feed or opens a feed item in an external application.
 - `F5` refresh list of feeds
+- `CTRL+C` quit
+
 
 ## build
 
@@ -59,4 +61,10 @@ make build
 
 ```shell
 make test
+```
+
+## lint
+
+```shell
+make lint
 ```

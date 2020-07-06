@@ -6,8 +6,8 @@ import (
 	"strings"
 )
 
-// StripHtmlTags uses regex to strip all html elements
-func StripHtmlTags(s string) string {
+// StripHTMLTags uses regex to strip all html elements
+func StripHTMLTags(s string) string {
 	const pattern = `(<\/?[a-zA-A]+?[^>]*\/?>)*`
 	r := regexp.MustCompile(pattern)
 	groups := r.FindAllString(s, -1)

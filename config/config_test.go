@@ -8,12 +8,13 @@ import (
 
 // TestLoadConfiguration tests loading the example config
 func TestLoadConfiguration(t *testing.T) {
-	exampleConfig := LoadConfiguration("../config-example.yaml")
+	exampleConfig, err := LoadConfiguration("../config-example.yaml")
+
+	assert.NoError(t, err)
 
 	expectedFeeds := []string{
-		"https://news.ycombinator.com/rss",
-		"https://www.reddit.com/r/golang/.rss",
-		"https://www.reddit.com/r/linux/.rss",
+		"https://aws.amazon.com/blogs/security/feed/",
+		"https://www.phoronix.com/rss.php",
 		"https://www.zdnet.com/topic/security/rss.xml",
 	}
 

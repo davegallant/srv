@@ -9,8 +9,5 @@ import (
 func Exists(filename string) bool {
 	var AppFs = afero.NewOsFs()
 	_, err := AppFs.Stat(filename)
-	if err != nil {
-		return false
-	}
-	return true
+	return err == nil
 }

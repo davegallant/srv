@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"log"
 	"os/exec"
-	"os/user"
-	"path"
 
 	"github.com/davegallant/srv/controller"
 	"github.com/davegallant/srv/utils"
@@ -37,7 +35,10 @@ func openFeed(g *gocui.Gui, v *gocui.View) error {
 	for _, item := range feed.Items {
 		fmt.Fprintln(ov, "-", item.Title)
 	}
-	nextView(g, ov)
+	err := nextView(g, ov)
+	if err != nil {
+		log.Printf("Unable to get next view: %s", err)
+	}
 	displayDescription(g, ov)
 
 	return nil
@@ -48,17 +49,15 @@ func getCurrentFeedItem(v *gocui.View) *gofeed.Item {
 	return Controller.Rss.Feeds[Controller.CurrentFeed].Items[oy]
 }
 
-// displayDescription displays feed descriptin if it exists
-func displayDescription(g *gocui.Gui, v *gocui.View) error {
+// displayDescription displays feed description if it exists
+func displayDescription(g *gocui.Gui, v *gocui.View) {
 
 	ov, _ := g.View("Description")
 	ov.Clear()
 
 	item := getCurrentFeedItem(v)
-	description := utils.StripHtmlTags(item.Description)
+	description := utils.StripHTMLTags(item.Description)
 	fmt.Fprintln(ov, description)
-
-	return nil
 }
 
 // openItem opens the feed in an external browser
@@ -157,14 +156,8 @@ func quit(g *gocui.Gui, v *gocui.View) error {
 
 // Start initializes the application
 func Start() {
-	usr, err := user.Current()
-	if err != nil {
-		log.Fatal(err)
-	}
-	configPath := path.Join(usr.HomeDir, ".config", "srv", "config.yaml")
-
 	Controller = &controller.Controller{}
-	Controller.Init(configPath)
+	Controller.Init()
 
 	g, err := gocui.NewGui(gocui.Output256)
 	if err != nil {
