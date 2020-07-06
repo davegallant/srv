@@ -1,0 +1,12 @@
+---
+feeds:
+- https://news.ycombinator.com/rss
+- https://www.reddit.com/r/linux/.rss
+- https://www.zdnet.com/topic/security/rss.xml
+- https://www.phoronix.com/rss.php
+
+# Optionally define an application to view the feeds
+#externalViewer: firefox
+# Optionally define args for the external viewer
+#externalViewerArgs:
+    #- --new-window
