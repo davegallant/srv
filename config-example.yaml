@@ -1,5 +1,0 @@
-feeds:
-- https://aws.amazon.com/blogs/security/feed/
-- https://www.phoronix.com/rss.php
-- https://www.zdnet.com/topic/security/rss.xml
-path: .config/srv/config.yml

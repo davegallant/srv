@@ -8,7 +8,7 @@ import (
 
 // TestLoadConfiguration tests loading the example config
 func TestLoadConfiguration(t *testing.T) {
-	exampleConfig, err := LoadConfiguration("../config-example.yaml")
+	exampleConfig, err := LoadConfiguration("../config-example.yml")
 
 	assert.NoError(t, err)
 
