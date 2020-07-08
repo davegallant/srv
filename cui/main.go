@@ -76,7 +76,8 @@ func openItem(g *gocui.Gui, v *gocui.View) error {
 }
 
 func refreshFeeds(g *gocui.Gui, v *gocui.View) error {
-	Controller.Rss.Update(Controller.Config.Feeds)
+	g.Close()
+	Start()
 	return nil
 }
 

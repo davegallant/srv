@@ -25,7 +25,7 @@ func keybindings(g *gocui.Gui) error {
 	if err := g.SetKeybinding("Items", gocui.KeyEnter, gocui.ModNone, openItem); err != nil {
 		return err
 	}
-	if err := g.SetKeybinding("", gocui.KeyF5, gocui.ModNone, refreshFeeds); err != nil {
+	if err := g.SetKeybinding("", gocui.KeyCtrlR, gocui.ModNone, refreshFeeds); err != nil {
 		return err
 	}
 	return nil

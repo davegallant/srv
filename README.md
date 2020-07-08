@@ -44,11 +44,13 @@ cp ./config-example.yml ~/.config/srv/config.yml
 
 Key mappings are statically defined for the time being.
 
-- `TAB` switches between Feeds and Items.
-- `UP/DOWN` navigates feeds and items`
-- `ENTER` either selects a feed or opens a feed item in an external application.
-- `F5` refresh list of feeds
-- `CTRL+C` quit
+| Key       | Description                                                           |
+|:---------:| --------------------------------------------------------------------- |
+| `TAB`     | switches between Feeds and Items.                                     |
+| `UP/DOWN` | navigates feeds and items`                                            |
+| `ENTER`   | either selects a feed or opens a feed item in an external application.|
+| `CTRL+R`  | refresh list of feeds                                                 |
+| `CTRL+C`  | quit                                                                  |
 
 
 ## build
