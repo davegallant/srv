@@ -13,10 +13,7 @@ View RSS feeds from the terminal.
 ### via releases
 
 ```shell
-VERSION='0.1.0'; \
-sudo curl --progress-bar \
--L "https://github.com/davegallant/srv/releases/download/v${VERSION}/srv_${VERSION}_$(uname -s)_x86_64.tar.gz" | \
-sudo tar -C /usr/bin --overwrite -xvzf - srv
+curl -fsSL https://raw.githubusercontent.com/davegallant/srv/master/install.sh | bash
 ```
 
 ### via go
@@ -44,11 +41,13 @@ cp ./config-example.yml ~/.config/srv/config.yml
 
 Key mappings are statically defined for the time being.
 
-- `TAB` switches between Feeds and Items.
-- `UP/DOWN` navigates feeds and items`
-- `ENTER` either selects a feed or opens a feed item in an external application.
-- `F5` refresh list of feeds
-- `CTRL+C` quit
+| Key       | Description                                                           |
+|:---------:| --------------------------------------------------------------------- |
+| `TAB`     | switches between Feeds and Items.                                     |
+| `UP/DOWN` | navigates feeds and items`                                            |
+| `ENTER`   | either selects a feed or opens a feed item in an external application.|
+| `CTRL+R`  | refresh list of feeds                                                 |
+| `CTRL+C`  | quit                                                                  |
 
 
 ## build
