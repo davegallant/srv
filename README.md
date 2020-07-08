@@ -13,10 +13,7 @@ View RSS feeds from the terminal.
 ### via releases
 
 ```shell
-VERSION='0.1.0'; \
-sudo curl --progress-bar \
--L "https://github.com/davegallant/srv/releases/download/v${VERSION}/srv_${VERSION}_$(uname -s)_x86_64.tar.gz" | \
-sudo tar -C /usr/bin --overwrite -xvzf - srv
+curl -fsSL https://raw.githubusercontent.com/davegallant/srv/master/install.sh | bash
 ```
 
 ### via go
