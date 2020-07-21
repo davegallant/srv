@@ -31,11 +31,7 @@ If a configuration is not provided, a default configuration is generated.
 - `feeds` is a list of RSS/Atom feeds to be loaded in srv.
 - `externalViewer` defines an application to override the default web browser (optional).
 
-An example config can be copied:
-
-```shell
-cp ./config-example.yml ~/.config/srv/config.yml
-```
+An example config can be found [here](./config-example.yml).
 
 ## navigate
 
