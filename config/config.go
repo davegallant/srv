@@ -25,7 +25,6 @@ type Configuration struct {
 	Feeds              []string `yaml:"feeds"`
 	ExternalViewer     string   `yaml:"externalViewer,omitempty"`
 	ExternalViewerArgs []string `yaml:"externalViewerArgs,omitempty"`
-	Path               string
 }
 
 // DefaultConfiguration can be used if a config is missing
@@ -35,7 +34,6 @@ var DefaultConfiguration = Configuration{
 		"https://www.phoronix.com/rss.php",
 		"https://www.zdnet.com/topic/security/rss.xml",
 	},
-	Path: ConfigPath,
 }
 
 // GetUGetUGetUserConfigPath returns the full configuration path for the current user
@@ -58,7 +56,6 @@ func DetermineExternalViewer() (string, error) {
 	case "darwin":
 		return "open", nil
 	}
-
 	return "", errors.New("Unable to determine a default external viewer")
 }
 

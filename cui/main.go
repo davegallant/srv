@@ -51,12 +51,17 @@ func getCurrentFeedItem(v *gocui.View) *gofeed.Item {
 
 // displayDescription displays feed description if it exists
 func displayDescription(g *gocui.Gui, v *gocui.View) {
+	item := getCurrentFeedItem(v)
+	description := utils.StripHTMLTags(item.Description)
+	setDescription(g, v, description)
+}
+
+// setDescription displays text in the bottom panel
+func setDescription(g *gocui.Gui, v *gocui.View, description string) {
 
 	ov, _ := g.View("Description")
 	ov.Clear()
 
-	item := getCurrentFeedItem(v)
-	description := utils.StripHTMLTags(item.Description)
 	fmt.Fprintln(ov, description)
 }
 
@@ -69,7 +74,7 @@ func openItem(g *gocui.Gui, v *gocui.View) error {
 		append(Controller.Config.ExternalViewerArgs, item.Link)...).Start()
 
 	if err != nil {
-		log.Fatal(err)
+		setDescription(g, v, err.Error())
 	}
 
 	return nil
