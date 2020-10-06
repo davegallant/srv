@@ -25,7 +25,7 @@ func TestExists(t *testing.T) {
 	t.Run("expects file to not exist", func(t *testing.T) {
 		input := fmt.Sprintf("test_file_%d", time.Now().UnixNano())
 
-		got := Exists(fmt.Sprintf(input))
+		got := Exists(input)
 		expect := false
 
 		if got != expect {
