@@ -8,11 +8,12 @@ import (
 	"github.com/spf13/afero"
 )
 
+var FakeFs = afero.NewOsFs()
+
 func TestExists(t *testing.T) {
 	t.Run("expects file to exist", func(t *testing.T) {
-		var FakeFs = afero.NewOsFs()
 		input, _ := afero.TempFile(FakeFs, ".", "")
-		defer FakeFs.Remove(input.Name())
+		defer removeFile(input.Name(), t)
 
 		got := Exists(input.Name())
 		expect := true
@@ -32,4 +33,11 @@ func TestExists(t *testing.T) {
 			t.Errorf("Expected file %s to not exist", input)
 		}
 	})
+}
+
+func removeFile(name string, t *testing.T) {
+	err := FakeFs.Remove(name)
+	if err != nil {
+		t.Errorf("Did not cleanly delete file %s", name)
+	}
 }
