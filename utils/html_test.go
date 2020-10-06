@@ -1,8 +1,6 @@
 package utils
 
-import (
-	"testing"
-)
+import "testing"
 
 func TestStripHTMLTags(t *testing.T) {
 	testCases := []struct {
