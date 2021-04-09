@@ -9,7 +9,7 @@ require (
 	github.com/juju/testing v0.0.0-20200608005635-e4eedbc6f7aa // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/mattn/go-runewidth v0.0.8 // indirect
-	github.com/mmcdole/gofeed v1.1.0
+	github.com/mmcdole/gofeed v1.1.1
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/nsf/termbox-go v0.0.0-20200204031403-4d2b513ad8be // indirect
 	github.com/spf13/afero v1.6.0
